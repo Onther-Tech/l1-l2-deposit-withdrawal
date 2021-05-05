@@ -13,8 +13,8 @@ const factory__L1_ERC20Gateway = getContractFactory('OVM_L1ERC20Gateway')
 
 async function main() {
   // Set up our RPC provider connections.
-  const l1RpcProvider = new ethers.providers.JsonRpcProvider('http://localhost:9545')
-  const l2RpcProvider = new ethers.providers.JsonRpcProvider('http://localhost:8545')
+  const l1RpcProvider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:9545')
+  const l2RpcProvider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545')
 
   // Set up our wallets (using a default private key with 10k ETH allocated to it).
   // Need two wallets objects, one for interacting with L1 and one for interacting with L2.
@@ -54,7 +54,8 @@ async function main() {
     l2MessengerAddress,
     'L2 ERC20', //name
     {
-      gasPrice: 0
+      gasPrice: 0,
+      gasLimit: 8999999
     }
   )
   await L2_ERC20.deployTransaction.wait()
@@ -64,7 +65,11 @@ async function main() {
   const L1_ERC20Gateway = await factory__L1_ERC20Gateway.connect(l1Wallet).deploy(
     L1_ERC20.address,
     L2_ERC20.address,
-    l1MessengerAddress
+    l1MessengerAddress,
+    {
+      gasPrice: 0,
+      gasLimit: 8999999
+    }
   )
   await L1_ERC20Gateway.deployTransaction.wait()
 
@@ -73,7 +78,8 @@ async function main() {
   const tx0 = await L2_ERC20.init(
     L1_ERC20Gateway.address,
     {
-      gasPrice: 0
+      gasPrice: 0,
+      gasLimit: 8999999
     }
   )
   await tx0.wait()
@@ -89,7 +95,9 @@ async function main() {
 
   // Lock the tokens up inside the gateway and ask the L2 contract to mint new ones.
   console.log('Depositing tokens into L2 ERC20...')
-  const tx2 = await L1_ERC20Gateway.deposit(1234)
+  const tx2 = await L1_ERC20Gateway.deposit(1234, {
+    gasPrice: 0,
+  })
   await tx2.wait()
 
   // Wait for the message to be relayed to L2.
