@@ -85,7 +85,7 @@ async function main() {
   await tx0.wait()
 
   // Initial balances.
-  console.log(`Balance on L1: ${await L1_ERC721.balanceOf(l1Wallet.address)}`) // 1234
+  console.log(`Balance on L1: ${await L1_ERC721.balanceOf(l1Wallet.address)}`) // 1
   console.log(`Balance on L2: ${await L2_ERC721.balanceOf(l1Wallet.address)}`) // 0
 
   // Allow the gateway to lock up some of our tokens.
@@ -105,7 +105,7 @@ async function main() {
 
   // Log some balances to see that it worked!
   console.log(`Balance on L1: ${await L1_ERC721.balanceOf(l1Wallet.address)}`) // 0
-  console.log(`Balance on L2: ${await L2_ERC721.balanceOf(l1Wallet.address)}`) // 1234
+  console.log(`Balance on L2: ${await L2_ERC721.balanceOf(l1Wallet.address)}`) // 1
 
   // Burn the tokens on L2 and ask the L1 contract to unlock on our behalf.
   console.log(`Withdrawing tokens back to L1 ERC721...`)
@@ -123,7 +123,7 @@ async function main() {
   await watcher.getL1TransactionReceipt(msgHash2)
 
   // Log balances again!
-  console.log(`Balance on L1: ${await L1_ERC721.balanceOf(l1Wallet.address)}`) // 1234
+  console.log(`Balance on L1: ${await L1_ERC721.balanceOf(l1Wallet.address)}`) // 1
   console.log(`Balance on L2: ${await L2_ERC721.balanceOf(l1Wallet.address)}`) // 0
 }
 
