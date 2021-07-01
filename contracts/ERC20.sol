@@ -87,7 +87,7 @@ contract ERC20 {
         address _to,
         uint256 _amount
     )
-        external
+        public
         returns (
             bool
         )
@@ -122,7 +122,7 @@ contract ERC20 {
         address _to,
         uint256 _amount
     )
-        external
+        public
         returns (
             bool
         )
